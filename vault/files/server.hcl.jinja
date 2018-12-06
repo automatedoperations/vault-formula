@@ -1,14 +1,14 @@
 {%- from "vault/map.jinja" import vault with context -%}
 {%- if vault.storage %}
-storage "{{ vault.backend.type }}" {
-  {%- if vault.backend.type == "s3" %}
-    bucket = "{{ vault.backend.bucket }}"
-  {%- elif vault.backend.type == "file" %}
-    path = "{{ vault.backend.path }}"
-  {%- elif vault.backend.type == "consul" %}
-    {%- for key in vault.backend %}
+storage "{{ vault.storage.type }}" {
+  {%- if vault.storage.type == "s3" %}
+    bucket = "{{ vault.storage.bucket }}"
+  {%- elif vault.storage.type == "file" %}
+    path = "{{ vault.storage.path }}"
+  {%- elif vault.storage.type == "consul" %}
+    {%- for key in vault.storage %}
     {%- if key != "type" %}
-    {{ key }} = "{{ vault.backend.get(key) }}"
+    {{ key }} = "{{ vault.storage.get(key) }}"
     {%- endif %}
     {%- endfor %}
   {% endif -%}
