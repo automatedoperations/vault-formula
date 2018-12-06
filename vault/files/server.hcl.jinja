@@ -5,10 +5,19 @@ backend "{{ vault.backend.type }}" {
     bucket = "{{ vault.backend.bucket }}"
   {%- elif vault.backend.type == "file" %}
     path = "{{ vault.backend.path }}"
+  {%- elif vault.backend.type == "consul" %}
+    {%- for key in vault.backend %}
+    {%- if key != "type" %}
+    {{ key }} = "{{ vault.backend.get(key) }}"
+    {%- endif %}
+    {%- endfor %}
   {% endif -%}
 }
 {% endif -%}
 
+{%- if vault.ui %}
+ui = true
+{% endif %}
 listener "{{ vault.listen_protocol }}" {
   address = "{{ vault.listen_address }}:{{ vault.listen_port }}"
   tls_disable = {{ vault.tls_disable }}
