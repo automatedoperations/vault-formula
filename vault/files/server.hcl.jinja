@@ -15,6 +15,16 @@ storage "{{ vault.storage.type }}" {
 }
 {% endif -%}
 
+{% if vault.telemetry.enabled %}
+telemetry {
+  {%- for key in vault.telemetry %}
+  {%- if key != "enabled" %}
+  {{ key }} = "{{ vault.telemetry.get(key) }}"
+  {%- endif %}
+  {%- endfor %}
+}
+{% endif -%}
+
 {%- if vault.ui %}
 ui = true
 {% endif %}
