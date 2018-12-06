@@ -19,10 +19,10 @@ storage "{{ vault.backend.type }}" {
 ui = true
 {% endif %}
 {%- if vault.api_addr %}
-api_addr = "vault.api_addr"
+api_addr = "{{ vault.api_addr }}"
 {% endif %}
 {%- if vault.cluster_addr  %}
-cluster_addr  = "vault.cluster_addr"
+cluster_addr  = "{{ vault.cluster_addr }}"
 {% endif %}
 listener "{{ vault.listen_protocol }}" {
   address = "{{ vault.listen_address }}:{{ vault.listen_port }}"
